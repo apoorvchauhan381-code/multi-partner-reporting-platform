@@ -1,74 +1,67 @@
 # Multi-Partner Reporting Platform
 
-> Automated reporting platform serving 20+ global airline partners — each with partitioned, zero-cross-visibility views of their own operational data.
+> Partitioned BI reporting system for global airline partners — hundreds of daily users, significantly faster load times.
 
-![Stack](https://img.shields.io/badge/SQL-Automation-0C447C?style=flat-square&labelColor=E6F1FB)
-![Stack](https://img.shields.io/badge/Spotfire-Dashboards-633806?style=flat-square&labelColor=FAEEDA)
-![Stack](https://img.shields.io/badge/Python-Pipelines-27500A?style=flat-square&labelColor=EAF3DE)
+## 📋 Overview
 
----
+Built to serve multiple global airline partners, each requiring isolated, zero-cross-visibility reporting on shared operational data. Partners must see only their own data — never another partner's — while the underlying dataset is unified.
 
-## 📌 Overview
+The platform uses row-level security and intelligent partitioning to enforce data isolation, combined with query optimisation and caching to handle high daily user volume without performance degradation.
 
-A multi-tenant automated reporting platform built for United Airlines' global partner ecosystem. Each of 20+ international partners receives automated, scheduled reports with visibility into their own operational data only — strict data partitioning ensures zero cross-partner data leakage.
+## ⚙️ Architecture
 
-**Role:** Sole analyst and developer  
-**Scale:** 20+ global partners · Automated monthly + ad-hoc reporting  
-**Outcome:** 90% reduction in manual reporting effort
+```
+Unified Ops Database
+        ↓
+  Partitioning Layer (row-level security)
+        ↓
+  Query Optimisation + Caching
+        ↓
+ Partner A  |  Partner B  |  Partner C  ...  (isolated views)
+        ↓
+  Spotfire / Power BI Dashboards (per-partner)
+```
 
----
+## 🛠️ Tech Stack
 
-## 🎯 Business Problem
+| Layer | Technology |
+|-------|-----------|
+| Database | PostgreSQL · T-SQL |
+| BI / Dashboards | Spotfire · Power BI |
+| Security | Row-level security · Parameterised queries |
+| Performance | Query optimisation · Intelligent caching |
+| Automation | Python · Scheduled refresh |
 
-| Before | After |
-|---|---|
-| Reports manually prepared per partner | Fully automated per-partner delivery |
-| Hours of analyst effort per cycle | Zero analyst effort for standard reports |
-| Risk of data cross-contamination | Strict SQL-level partitioning |
-| No self-serve capability | Partners receive data on schedule |
+## 📊 Results
 
----
+- 👥 Hundreds of daily active users across multiple partners
+- ⚡ Significant improvement in dashboard load time via query optimisation
+- 🔒 Zero cross-partner data visibility incidents
+- 🔄 Fully automated refresh — no manual report generation
+- 📉 Drastic reduction in manual reporting effort organisation-wide
 
-## ⚙️ Tech Stack
+## 🗂️ Repository Structure
 
-| Component | Technology |
-|---|---|
-| Reporting dashboards | Spotfire |
-| Data pipelines | SQL · Python |
-| Partitioning logic | Parameterized SQL by partner ID |
-| Scheduling | Automated refresh cadence |
+```
+├── partitioning/    # Row-level security and data isolation logic
+├── sql/             # Optimised queries, views, and stored procedures
+├── caching/         # Caching layer configuration and strategy
+├── dashboards/      # Dashboard templates per partner type
+├── automation/      # Scheduled refresh and report distribution
+├── data/            # Anonymised sample schemas
+└── README.md
+```
 
----
+## 🚀 Getting Started
 
-## 🏗️ Key Design Decisions
+```bash
+git clone https://github.com/apoorvchauhan381-code/multi-partner-reporting-platform
+cd multi-partner-reporting-platform
+pip install -r requirements.txt
+cp config.example.yaml config.yaml  # configure partner list and DB connection
+python automation/setup_partners.py
+```
 
-### Data partitioning
-Each partner's data view is generated via parameterized SQL queries filtered strictly by partner ID. No partner can access another's data — partitioning is enforced at the query level, not the application level.
+## 📝 Notes
 
-### Automated delivery
-Reports are auto-generated and distributed on a scheduled cadence without analyst intervention. Exception handling flags any data quality issues before delivery.
-
-### Scalability
-Adding a new partner requires only a new partner ID configuration — no new pipeline development needed.
-
----
-
-## 📈 Outcomes
-
-- **Partners served:** 20+ global airline partners
-- **Manual effort eliminated:** ~90%
-- **Data incidents:** Zero cross-partner data leakage
-- **Analyst time freed:** Redirected to higher-value AI/automation projects
-
----
-
-## 🔒 Note
-
-Built and deployed within United Airlines' internal operations environment. Source code and data are confidential.
-
----
-
-## 👤 Author
-
-**Apoorv Chauhan**  
-📧 apoorvchauhan381@gmail.com · 💼 [LinkedIn](https://linkedin.com/in/apoorv-chauhan-8a8865198)
+All partner names and operational data in sample files are anonymised or fictional.
